@@ -11,11 +11,11 @@ Figma2safePDF
 
 ## Tagline（一句话）
 
-Export frames or slides as image-only PDF or PPTX. Nothing selectable, nothing editable.
+Export frames or slides as PDF or PPTX that look exactly like your canvas, in every viewer.
 
 ## Description
 
-Turn any set of frames — or a whole Figma Slides deck — into a PDF or PPTX where every page is a single flat image. No text layer, no vector objects, nothing to copy, edit or reverse-engineer. Built for sharing decks and design reviews outside the team.
+Figma's built-in PDF and PPTX export is fragile: fonts get substituted, gradients and shadows break, layouts shift, and the files often open wrong in PowerPoint, Keynote, WeChat or on a phone. Figma2safePDF renders every frame as one flat image and packs those into a PDF or PPTX, so what you see on the canvas is exactly what they get.
 
 **How it works**
 - Select the frames you want, or select nothing to export every top-level frame on the page (sections are expanded automatically).
@@ -28,6 +28,7 @@ Turn any set of frames — or a whole Figma Slides deck — into a PDF or PPTX w
 - PPTX slides follow the aspect ratio of the first frame; other frames are centered.
 - Works in Figma Design and Figma Slides.
 - Fully offline. The plugin declares no network access and never uploads your designs anywhere.
+- Side effect: there is no text layer and nothing editable, which is handy when sharing decks outside the team.
 
 Source code: github.com/Octl1bra/Figma2safePDF
 

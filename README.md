@@ -1,6 +1,6 @@
 # Figma2safePDF
 
-把 Figma 里的 Frame / Slide 导出成**纯图片**的 PDF 和 PPTX。每一页就是一张位图，没有文字层、没有可编辑对象，拿去给外部看不怕被复制或改动。
+Figma 自带的 PDF / PPTX 导出兼容性很差：字体被替换、渐变和阴影丢失、版式跑位，PowerPoint 和微信里经常直接打不开。这个插件把每个 Frame / Slide 渲染成一张位图，再拼成 PDF 或 PPTX，在哪打开都和画布上一模一样。顺带的好处是没有文字层、没有可编辑对象。
 
 - 支持 Figma Design 和 Figma Slides 两种编辑器
 - 什么都不选：导出当前页面所有顶层 Frame（Section 会自动展开成里面的 Frame）；选中了什么就只导什么
