@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Figma2safePDF harness</title>
+<!-- Fake Figma main thread: feeds canvas-rendered PNG/JPG into dist/ui.html. Run `pnpm harness`, open http://localhost:8766/scripts/harness.html. Use a fresh port if Chrome starts blocking downloads. -->
+<style>body{font:13px system-ui;margin:16px;display:flex;gap:16px}iframe{border:1px solid #ccc}pre{flex:1;background:#f5f5f5;padding:8px;max-height:560px;overflow:auto;white-space:pre-wrap}</style></head>
+<body>
+<iframe id="f" src="../dist/ui.html" width="340" height="560"></iframe>
+<pre id="log"></pre>
+<script>
+const f = document.getElementById('f');
+const log = (m) => { document.getElementById('log').textContent += m + '\n'; console.log('[harness] ' + m); };
+const send = (m) => f.contentWindow.postMessage({ pluginMessage: m }, '*');
+const items = [
+  { id: '1:1', name: 'Cover', type: 'FRAME', width: 1920, height: 1080 },
+  { id: '1:2', name: 'Agenda', type: 'FRAME', width: 1920, height: 1080 },
+  { id: '1:3', name: 'Mobile / Long', type: 'FRAME', width: 390, height: 844 },
+];
+const candidates = () => ({ type: 'candidates', fileName: 'Harness Deck', pageName: 'Page 1', editorType: 'figma', fromSelection: false, items });
+async function render(w, h, label, i, format) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const x = c.getContext('2d');
+  x.fillStyle = ['#0d99ff', '#14ae5c', '#f24822'][i % 3]; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#fff'; x.font = `bold ${Math.round(Math.min(w, h) / 8)}px sans-serif`; x.fillText(label, 40, h / 2);
+  const blob = await new Promise((r) => c.toBlob(r, format === 'JPG' ? 'image/jpeg' : 'image/png', 0.85));
+  return new Uint8Array(await blob.arrayBuffer());
+}
+window.onmessage = async (e) => {
+  const m = e.data?.pluginMessage; if (!m) return;
+  log('← ' + JSON.stringify({ ...m, bytes: undefined }).slice(0, 240));
+  if (m.type === 'ready') { send({ type: 'settings', settings: { scale: 2, format: 'PNG', order: 'position', output: 'pdf' } }); send(candidates()); }
+  if (m.type === 'refresh') send(candidates());
+  if (m.type === 'export') {
+    for (let i = 0; i < m.ids.length; i++) {
+      const it = items[i];
+      send({ type: 'progress', index: i, total: m.ids.length, name: it.name });
+      const bytes = await render(it.width * m.scale, it.height * m.scale, it.name, i, m.format);
+      log(`→ image ${i} ${bytes.length} bytes`);
+      send({ type: 'image', index: i, name: it.name, bytes });
+    }
+    send({ type: 'done' });
+  }
+};
+</script></body></html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Figma2safePDF</title>
+<style>
+  /* Styled after Figma's own Export panel: 11px Inter, 8px rhythm, themeColors vars. */
+  :root {
+    --bg: var(--figma-color-bg, #ffffff);
+    --bg2: var(--figma-color-bg-secondary, #f5f5f5);
+    --hover: var(--figma-color-bg-hover, #f0f0f0);
+    --sel: var(--figma-color-bg-selected, #e5f4ff);
+    --fg: var(--figma-color-text, #1e1e1e);
+    --fg2: var(--figma-color-text-secondary, rgba(0,0,0,.5));
+    --fg3: var(--figma-color-text-tertiary, rgba(0,0,0,.3));
+    --border: var(--figma-color-border, #e6e6e6);
+    --border-strong: var(--figma-color-border-strong, #2c2c2c);
+    --brand: var(--figma-color-bg-brand, #0d99ff);
+    --brand-hover: var(--figma-color-bg-brand-hover, #0b8ce9);
+    --onbrand: var(--figma-color-text-onbrand, #ffffff);
+    --disabled: var(--figma-color-bg-disabled, #d9d9d9);
+    --ondisabled: var(--figma-color-text-ondisabled, rgba(0,0,0,.3));
+    --ok: var(--figma-color-text-success, #14ae5c);
+    --err: var(--figma-color-text-danger, #f24822);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 11px/16px Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--fg); background: var(--bg);
+    display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; user-select: none;
+  }
+  header { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 8px 0 16px; border-bottom: 1px solid var(--border); flex: none; }
+  header strong { font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .icon { width: 24px; height: 24px; border: 0; background: none; color: var(--fg2); border-radius: 2px; cursor: pointer; padding: 0; font-size: 14px; line-height: 1; }
+  .icon:hover:not(:disabled) { background: var(--hover); color: var(--fg); }
+
+  #list { list-style: none; margin: 0; padding: 4px 0; flex: 1; overflow-y: auto; min-height: 96px; }
+  #list li { display: flex; align-items: center; gap: 8px; height: 24px; padding: 0 16px; cursor: default; }
+  #list li:hover { background: var(--hover); }
+  #list .idx { width: 18px; color: var(--fg3); font-variant-numeric: tabular-nums; text-align: right; flex: none; }
+  #list .name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #list .dim { color: var(--fg2); font-variant-numeric: tabular-nums; flex: none; }
+  #empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--fg3); padding: 16px; text-align: center; }
+  #empty[hidden] { display: none; }
+
+  .opts { border-top: 1px solid var(--border); padding: 8px 16px; display: grid; gap: 8px; flex: none; }
+  .row { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+  .row[hidden] { display: none; }
+  .row > label:first-child { width: 48px; color: var(--fg2); flex: none; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .seg button { height: 22px; padding: 0 10px; border: 0; background: none; color: var(--fg); font: inherit; cursor: pointer; border-right: 1px solid var(--border); }
+  .seg button:last-child { border-right: 0; }
+  .seg button:hover:not([aria-pressed="true"]):not(:disabled) { background: var(--hover); }
+  .seg button[aria-pressed="true"] { background: var(--sel); color: var(--fg); font-weight: 600; }
+  .seg button:disabled { color: var(--fg3); cursor: default; }
+  .num { width: 64px; height: 22px; padding: 0 6px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); color: var(--fg); font: inherit; -moz-appearance: textfield; }
+  .num::-webkit-inner-spin-button, .num::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .num::placeholder { color: var(--fg3); }
+  .num:focus { outline: none; border-color: var(--brand); }
+  .num:disabled { color: var(--fg3); }
+
+  footer { border-top: 1px solid var(--border); padding: 8px 16px 12px; display: grid; gap: 8px; flex: none; }
+  #progress { height: 4px; background: var(--bg2); border-radius: 2px; overflow: hidden; }
+  #progress[hidden] { display: none; }
+  #bar { height: 100%; width: 0; background: var(--brand); transition: width .15s; }
+  #status { color: var(--fg2); min-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #status[data-tone="ok"] { color: var(--ok); }
+  #status[data-tone="err"] { color: var(--err); }
+  .actions { display: flex; gap: 8px; }
+  .btn { height: 32px; padding: 0 12px; border-radius: 6px; font: inherit; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+  .btn.primary { flex: 1; background: var(--brand); color: var(--onbrand); }
+  .btn.primary:hover:not(:disabled) { background: var(--brand-hover); }
+  .btn.primary:disabled { background: var(--disabled); color: var(--ondisabled); cursor: default; }
+  .btn.secondary { background: none; color: var(--fg); border-color: var(--border-strong); }
+  .btn.secondary:hover { background: var(--hover); }
+  .btn[hidden] { display: none; }
+</style>
+</head>
+<body>
+  <header>
+    <strong id="source">Loading…</strong>
+    <button id="refresh" class="icon" title="Refresh list">↻</button>
+  </header>
+
+  <ul id="list"></ul>
+  <div id="empty" hidden>Nothing to export on this page.</div>
+
+  <section class="opts">
+    <div class="row" id="order-row">
+      <label>Order</label>
+      <div class="seg" data-seg="order">
+        <button data-value="position" title="Row by row, left to right">Position</button>
+        <button data-value="layers" title="Top of the layers panel first">Layers</button>
+        <button data-value="number" title="First number in the layer name, ascending">Number</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>Scale</label>
+      <div class="seg" data-seg="scale">
+        <button data-value="1">1x</button>
+        <button data-value="2">2x</button>
+        <button data-value="3">3x</button>
+        <button data-value="4">4x</button>
+      </div>
+      <input id="scale-custom" class="num" type="number" min="0.1" max="10" step="0.1" placeholder="custom" title="Any multiplier, 0.1–10">
+    </div>
+    <div class="row">
+      <label>Image</label>
+      <div class="seg" data-seg="format">
+        <button data-value="PNG" title="Lossless, larger files">PNG</button>
+        <button data-value="JPG" title="Smaller files, no transparency">JPG</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>Output</label>
+      <div class="seg" data-seg="output">
+        <button data-value="pdf" title="One page per frame, each page sized to its frame">PDF</button>
+        <button data-value="pptx" title="One slide per frame, slide size follows the first frame">PPTX</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div id="progress" hidden><div id="bar"></div></div>
+    <div id="status"></div>
+    <div class="actions">
+      <button id="export" class="btn primary" disabled>Export</button>
+      <button id="cancel" class="btn secondary" hidden>Cancel</button>
+    </div>
+  </footer>
+  <!--SCRIPT-->
+</body>
+</html>

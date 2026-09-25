@@ -1,0 +1,10 @@
+{
+  "name": "Figma2safePDF",
+  "id": "figma2safepdf-dev",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma", "slides"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": { "allowedDomains": ["none"] }
+}
