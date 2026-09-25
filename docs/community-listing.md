@@ -3,7 +3,9 @@
 发布入口：Figma 桌面端 → 左上角 Figma 图标 → Plugins → Manage plugins → 本插件 → Publish。
 发布前先把 manifest.json 里的 `id` 换成 Figma 分配的真实 ID（Plugins → Development → New plugin 生成一个模板，把它的 id 抄过来）。
 
-素材在 `assets/`：`icon-128.png`（128×128）、`cover-1920x1080.png`（1920×1080）。源文件在个人工作区 Figma 文件的「Figma2safePDF」Section 里。
+素材在 `assets/`：`icon-128.png`（128×128）、`cover-1920x1080.png`。源文件在个人工作区 Figma 文件的「Figma2safePDF」Section 里（`Icon 128` / `Cover 1920x1080` 两个 Frame）。
+
+> 当前仓库里的 cover 是 1280×720 的预览渲染（MCP 限额撞了没拿到 1x）。发布前在 Figma 里选中 `Cover 1920x1080` → 右侧 Export → PNG @1x，覆盖掉这个文件。
 
 ## Name
 
