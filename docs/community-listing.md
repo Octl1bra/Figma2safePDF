@@ -1,7 +1,7 @@
 # Figma Community 发布页文案
 
 发布入口：Figma 桌面端 → 左上角 Figma 图标 → Plugins → Manage plugins → 本插件 → Publish。
-发布前先把 manifest.json 里的 `id` 换成 Figma 分配的真实 ID（Plugins → Development → New plugin 生成一个模板，把它的 id 抄过来）。
+manifest.json 里的 `id`（1685315043996745654）是 Figma 分配的正式 ID，更新时沿用，别改。
 
 素材在 `assets/`：`icon-128.png`（128×128）、`cover-1920x1080.png`。源文件在个人工作区 Figma 文件的「Figma2safePDF」Section 里（`Icon 128` / `Cover 1920x1080` 两个 Frame）。
 
