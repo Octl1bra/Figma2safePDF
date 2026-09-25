@@ -1,5 +1,7 @@
 # Figma2safePDF
 
+![Figma2safePDF — what you see is what they get](assets/cover-1920x1080.png)
+
 Figma 自带的 PDF / PPTX 导出兼容性很差：字体被替换、渐变和阴影丢失、版式跑位，PowerPoint 和微信里经常直接打不开。这个插件把每个 Frame / Slide 渲染成一张位图，再拼成 PDF 或 PPTX，在哪打开都和画布上一模一样。顺带的好处是没有文字层、没有可编辑对象。
 
 - 支持 Figma Design 和 Figma Slides 两种编辑器

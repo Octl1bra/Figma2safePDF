@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Figma2safePDF cover</title>
+<!-- Faithful HTML rebuild of the Figma frame "Cover 1920x1080" (section "Figma2safePDF" in the personal workspace file).
+     Rendered to cover-1920x1080.png with headless Chrome, see docs/community-listing.md. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #F3EFE6; }
+  #cover { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #F3EFE6;
+           font-family: Inter, sans-serif; color: #171717; -webkit-font-smoothing: antialiased; }
+  #cover > * { position: absolute; }
+  .t { line-height: 1.21; white-space: pre; }
+  .eyebrow { left: 120px; top: 128px; font: 500 22px/1.21 Inter; letter-spacing: .12em; color: #E0432A; }
+  .title { left: 120px; top: 168px; font: 700 128px/1.21 Inter; letter-spacing: -.03em; }
+  .title b { font-weight: 700; color: #E0432A; }
+  .statement { left: 120px; top: 360px; width: 900px; font: 600 64px/1.1 Inter; letter-spacing: -.02em; }
+  .body { left: 120px; top: 560px; width: 780px; font: 400 30px/1.4 Inter; opacity: .72; white-space: normal; }
+  .chips { left: 120px; top: 772px; display: flex; gap: 16px; }
+  .chip { box-sizing: border-box; border: 3px solid #E0432A; border-radius: 6px; padding: 12px 22px;
+          font: 600 26px/1.21 Inter; letter-spacing: .04em; color: #E0432A; }
+  .footer { left: 120px; top: 936px; font: 400 22px/1.21 Inter; opacity: .5; }
+  .card { box-sizing: border-box; width: 576px; height: 324px; background: #fff; border: 3px solid #171717; border-radius: 4px; }
+  .line { height: 14px; background: #171717; opacity: .85; border-radius: 3px; }
+  .img { left: 1328px; top: 604px; width: 480px; height: 100px; background: #F3EFE6; border-radius: 3px; }
+  .px { width: 24px; height: 24px; background: #E0432A; }
+</style></head>
+<body><div id="cover">
+  <div class="t eyebrow">FIGMA PLUGIN  ·  PDF / PPTX THAT OPEN EVERYWHERE</div>
+  <div class="t title">Figma<b>2</b>safePDF</div>
+  <div class="t statement">What you see is
+what they get.</div>
+  <div class="t body">Figma’s built-in export swaps fonts, drops effects and shifts layouts. This plugin renders every frame as one flat image, so the file opens pixel-identical in Acrobat, PowerPoint, Keynote, WeChat or on a phone.</div>
+  <div class="chips"><div class="chip">PDF</div><div class="chip">PPTX</div></div>
+  <div class="t footer">github.com/Octl1bra/Figma2safePDF</div>
+
+  <div class="card" style="left:1160px;top:300px"></div>
+  <div class="card" style="left:1220px;top:360px"></div>
+  <div class="card" style="left:1280px;top:420px"></div>
+  <div class="line" style="left:1328px;top:476px;width:300px"></div>
+  <div class="line" style="left:1328px;top:510px;width:420px"></div>
+  <div class="line" style="left:1328px;top:544px;width:260px"></div>
+  <div class="img"></div>
+  <script>
+    // Same dither as the Figma source: [columns from the card's right edge, rows from its top], 24px cells.
+    const HOLES = [[0,0],[1,0],[2,0],[3,0],[0,1],[2,1],[0,2],[1,2],[0,3],[1,4]];
+    const FLOAT = [[1880,444],[1880,372],[1832,372],[1808,348]];
+    const cover = document.getElementById('cover');
+    for (const [c, r] of HOLES) { const d = document.createElement('div'); d.className = 'px'; d.style.left = (1856 - 24 * (c + 1)) + 'px'; d.style.top = (420 + 24 * r) + 'px'; cover.appendChild(d); }
+    for (const [x, y] of FLOAT) { const d = document.createElement('div'); d.className = 'px'; d.style.left = x + 'px'; d.style.top = y + 'px'; cover.appendChild(d); }
+  </script>
+</div></body></html>

@@ -5,7 +5,11 @@
 
 素材在 `assets/`：`icon-128.png`（128×128）、`cover-1920x1080.png`。源文件在个人工作区 Figma 文件的「Figma2safePDF」Section 里（`Icon 128` / `Cover 1920x1080` 两个 Frame）。
 
-> 当前仓库里的 cover 是 1280×720 的预览渲染（MCP 限额撞了没拿到 1x）。发布前在 Figma 里选中 `Cover 1920x1080` → 右侧 Export → PNG @1x，覆盖掉这个文件。
+`cover-1920x1080.png` 由 `assets/cover.html` 用 headless Chrome 渲染（和 Figma 里的 Frame 逐坐标一致，字体走 Google Fonts 的 Inter）。重渲：
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1920,1080 --virtual-time-budget=8000 --screenshot="$PWD/assets/cover-1920x1080.png" "file://$PWD/assets/cover.html"
+```
 
 ## Name
 
