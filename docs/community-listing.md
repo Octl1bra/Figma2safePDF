@@ -40,7 +40,11 @@ Source code: github.com/Octl1bra/Figma2safePDF
 
 ## Category
 
-Design tools
+Import & export（列表里没有就选 Utilities；别选 Design tools）
+
+## Tags
+
+pdf, pptx, export, powerpoint, keynote, slides, presentation, image export
 
 ## Data security 页
 
